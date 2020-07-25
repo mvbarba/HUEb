@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PopInHandler : MonoBehaviour
 {
-	public float popInRate = 0.2f;
+	public float popInRate = 0.15f;
 	public void OnEnable() {
 		StartCoroutine(PopInChildren());
 	}
