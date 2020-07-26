@@ -654,7 +654,7 @@ MonoBehaviour:
   raycastLayer:
     serializedVersion: 2
     m_Bits: 1
-  maxRaycastDistance: 10
+  maxRaycastDistance: 4
   seesInteractable: 0
 --- !u!1 &956306393
 GameObject:
