@@ -11,10 +11,12 @@ public class MouseLook : MonoBehaviour
 	public float maxRaycastDistance = 10f;
 	public bool seesInteractable = false;
 	private GameObject hud;
+	private PlayerStateManager playerState;
 
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
 		hud = GameObject.Find("HUD");
+		playerState = PlayerStateManager.Instance();
 	}
 
 	public void Update() {
@@ -23,8 +25,6 @@ public class MouseLook : MonoBehaviour
 		if (Input.GetButtonDown("Free Camera")) {
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 		}
-
-		PlayerStateManager playerState = PlayerStateManager.Instance();
 		
 		// Only move the character's view if the cursor is locked in
 		if (Cursor.lockState == CursorLockMode.Locked) {
