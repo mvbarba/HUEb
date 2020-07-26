@@ -62,6 +62,6 @@ public class MouseLook : MonoBehaviour
 		}
 
 		// Update the HUD
-		hud.transform.Find("InteractText").gameObject.SetActive(playerState.itemSeen != null);
+		hud.GetComponent<Animator>().SetBool("SeesInteractable", playerState.itemSeen != null && playerState.itemHeld == null);
 	}
 }
