@@ -6,7 +6,7 @@ public class PlayerStateManager : MonoBehaviour
 {
 	private static PlayerStateManager instance;
 
-	public Interactable itemHeld = null;
+	public PickupInteractable itemHeld = null;
 	public Interactable itemSeen = null;
 
 	private void Awake() {

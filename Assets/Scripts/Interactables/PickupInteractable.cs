@@ -8,28 +8,42 @@ public class PickupInteractable : Interactable
     Transform playerTransform;
     Vector3 pickupPosition;
     Rigidbody rb;
+    PlayerStateManager playerState;
+    Camera mainCamera;
+    float pickupDistance;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerState = PlayerStateManager.Instance();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         pickupPosition = Camera.main.transform.forward * 5f;
-        OnInteract();
+        mainCamera = Camera.main;
+        pickupDistance = mainCamera.GetComponent<MouseLook>().maxRaycastDistance * 0.9f;
+        //OnInteract();
     }
 
     public override void OnInteract()
     {
         Debug.Log("Object picked up: " + gameObject.name);
+        playerState.itemHeld = this;
         isPickedUp = true;
         rb.useGravity = false;
         rb.freezeRotation = true;
     }
 
+    public void Drop() {
+        playerState.itemHeld = null;
+        isPickedUp = false;
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
+
     private void FixedUpdate()
     {
-        if (isPickedUp  && Time.time > 2)
+        if (isPickedUp)
         {
-            Vector3 interactionPoint = playerTransform.position + Camera.main.transform.forward * 5f;
+            Vector3 interactionPoint = mainCamera.transform.position + mainCamera.transform.forward * pickupDistance;
             Vector3 posDelta = interactionPoint - transform.position;
             rb.velocity = posDelta * 1000 * Time.fixedDeltaTime;
             transform.rotation = playerTransform.rotation;
