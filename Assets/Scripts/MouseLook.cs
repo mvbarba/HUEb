@@ -7,9 +7,14 @@ public class MouseLook : MonoBehaviour
 	public float mouseSensitivity = 100f;
 	private float verticalRot = 0f;
 	public Transform playerBody;
+	public LayerMask raycastLayer;
+	public float maxRaycastDistance = 10f;
+	public bool seesInteractable = false;
+	private GameObject hud;
 
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
+		hud = GameObject.Find("HUD");
 	}
 
 	public void Update() {
@@ -18,6 +23,8 @@ public class MouseLook : MonoBehaviour
 		if (Input.GetButtonDown("Free Camera")) {
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 		}
+
+		PlayerStateManager playerState = PlayerStateManager.Instance();
 		
 		// Only move the character's view if the cursor is locked in
 		if (Cursor.lockState == CursorLockMode.Locked) {
@@ -33,5 +40,28 @@ public class MouseLook : MonoBehaviour
 			transform.localRotation = Quaternion.Euler(verticalRot, 0f, 0f);
 			playerBody.Rotate(Vector3.up * mx);
 		}
+
+		// Check if the player sees an interactable
+		RaycastHit raycastHit;
+		if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, raycastLayer)) {
+			// Check if the object they're looking at is interactable
+			GameObject obj = raycastHit.transform.gameObject;
+			playerState.itemSeen = (obj.GetComponent<Interactable>() != null) ? obj.GetComponent<Interactable>() : null;
+		} else {
+			playerState.itemSeen = null;
+		}
+
+		// Check if they want to interact with the object
+		if (playerState.itemSeen != null && Input.GetButtonDown("Interact")) {
+			if (playerState.itemHeld == null) {
+				// Interact with the item
+				playerState.itemSeen.OnInteract();
+			} else {
+				// Drop the item
+			}
+		}
+
+		// Update the HUD
+		hud.GetComponent<Animator>().SetBool("SeesInteractable", playerState.itemSeen != null && playerState.itemHeld == null);
 	}
 }
