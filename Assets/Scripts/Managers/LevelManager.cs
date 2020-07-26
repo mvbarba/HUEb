@@ -60,6 +60,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    // Gets a list of every gameobject under the levelParent gameobject
+    public List<GameObject> GetLevelObjects()
+    {
+        List<GameObject> objects = new List<GameObject>();
+        Interactable[] interactableList = levelParent.GetComponentsInChildren<Interactable>();
+        foreach (Interactable interactable in interactableList)
+            objects.Add(interactable.gameObject);
+        return objects;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +79,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }
