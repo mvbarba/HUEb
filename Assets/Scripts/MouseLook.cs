@@ -10,11 +10,11 @@ public class MouseLook : MonoBehaviour
 	public LayerMask raycastLayer;
 	public float maxRaycastDistance = 10f;
 	public bool seesInteractable = false;
-	private PlayerStateManager playerState = PlayerStateManager.Instance();
-	
+	private GameObject hud;
 
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
+		hud = GameObject.Find("HUD");
 	}
 
 	public void Update() {
@@ -23,6 +23,8 @@ public class MouseLook : MonoBehaviour
 		if (Input.GetButtonDown("Free Camera")) {
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 		}
+
+		PlayerStateManager playerState = PlayerStateManager.Instance();
 		
 		// Only move the character's view if the cursor is locked in
 		if (Cursor.lockState == CursorLockMode.Locked) {
@@ -45,6 +47,8 @@ public class MouseLook : MonoBehaviour
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
 			playerState.itemSeen = (obj.GetComponent<Interactable>() != null) ? obj.GetComponent<Interactable>() : null;
+		} else {
+			playerState.itemSeen = null;
 		}
 
 		// Check if they want to interact with the object
@@ -56,5 +60,8 @@ public class MouseLook : MonoBehaviour
 				// Drop the item
 			}
 		}
+
+		// Update the HUD
+		hud.transform.Find("InteractText").gameObject.SetActive(playerState.itemSeen != null);
 	}
 }
