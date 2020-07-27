@@ -24,6 +24,7 @@ public class MouseLook : MonoBehaviour
 		// Unlock the mouse cursor if "F" is pressed
 		if (Input.GetButtonDown("Free Camera")) {
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
+			Cursor.visible = Cursor.lockState == CursorLockMode.None;
 		}
 		
 		// Only move the character's view if the cursor is locked in
