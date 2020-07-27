@@ -51,19 +51,20 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        AudioManager.Instance().Play("Elevator");
         foreach (LevelChangeInteractable button in levelButtons)
             button.ToggleButton(false);
         ClearLevels();
         particleParent.SetActive(true);
-        directionalLight.GetComponent<Animator>().SetBool("LightUp", false);
-        yield return new WaitForSeconds(4f);
+        directionalLight.GetComponent<Animator>().SetTrigger("LightDown");
+        yield return new WaitForSeconds(10f);
 
+        AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
         foreach (LevelChangeInteractable button in levelButtons)
             button.ToggleButton(true);
         particleParent.SetActive(false);
-        directionalLight.GetComponent<Animator>().SetBool("LightUp", true);
         yield break;
     }
 
