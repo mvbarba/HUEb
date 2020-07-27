@@ -7,7 +7,10 @@ public class DimensionManager : MonoBehaviour
 {
     private static DimensionManager instance;
 
-    private Constants.Color currentDimension = Constants.Color.None;
+    public Constants.Color currentDimension {
+        get;
+        private set;
+    } = Constants.Color.None;
 
     public static DimensionManager Instance()
     {
@@ -21,18 +24,17 @@ public class DimensionManager : MonoBehaviour
 
    public void ChangeDimension(Constants.Color color)
     {
+        currentDimension = color;
+        
         List<GameObject> objects= LevelManager.Instance().GetLevelObjects();
         foreach (GameObject obj in objects)
         {
             Interactable interactable = obj.GetComponent<Interactable>();
             if (interactable)
             {
-                if (interactable.color == Constants.Color.None)
-                    continue;
-                if (interactable.color == Constants.Color.White)
-                    continue;
-                if (interactable.color == color){/* do what we do when the color matches*/}
-                else {/* do what we do when the colors DONT matches*/}
+                bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color;
+                obj.GetComponent<MeshRenderer>().enabled = objectVisible;
+                Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
             }
         }
     }
