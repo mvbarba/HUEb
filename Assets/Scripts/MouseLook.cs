@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
@@ -7,16 +6,17 @@ public class MouseLook : MonoBehaviour
 	public float mouseSensitivity = 100f;
 	private float verticalRot = 0f;
 	public Transform playerBody;
-	public LayerMask raycastLayer;
 	public float maxRaycastDistance = 10f;
 	public bool seesInteractable = false;
 	private GameObject hud;
 	private PlayerStateManager playerState;
+	private DimensionManager dimension;
 
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
 		hud = GameObject.Find("HUD");
 		playerState = PlayerStateManager.Instance();
+		dimension = DimensionManager.Instance();
 	}
 
 	public void Update() {
@@ -44,7 +44,7 @@ public class MouseLook : MonoBehaviour
 
 		// Check if the player sees an interactable
 		RaycastHit raycastHit;
-		if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, raycastLayer)) {
+		if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, LayerMask.GetMask(dimension.currentDimension.ToString(), "Default"))) {
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
 			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled) ? obj.GetComponent<Interactable>() : null;

@@ -7,7 +7,10 @@ public class DimensionManager : MonoBehaviour
 {
     private static DimensionManager instance;
 
-    private Constants.Color currentDimension = Constants.Color.None;
+    public Constants.Color currentDimension {
+        get;
+        private set;
+    } = Constants.Color.None;
 
     public static DimensionManager Instance()
     {
@@ -21,6 +24,8 @@ public class DimensionManager : MonoBehaviour
 
    public void ChangeDimension(Constants.Color color)
     {
+        currentDimension = color;
+        
         List<GameObject> objects= LevelManager.Instance().GetLevelObjects();
         foreach (GameObject obj in objects)
         {
