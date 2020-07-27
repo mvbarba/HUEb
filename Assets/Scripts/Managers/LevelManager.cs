@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     public LevelChangeInteractable[] levelButtons;
     public GameObject particleParent;
 
+    public float levelTransitionDelay;
+
     public enum LevelNum
     {
         Level1,
@@ -52,12 +54,13 @@ public class LevelManager : MonoBehaviour
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
         AudioManager.Instance().Play("Elevator");
+        Camera.main.GetComponent<Animator>().SetTrigger("Shake");
         foreach (LevelChangeInteractable button in levelButtons)
             button.ToggleButton(false);
         ClearLevels();
         particleParent.SetActive(true);
         directionalLight.GetComponent<Animator>().SetTrigger("LightDown");
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(levelTransitionDelay);
 
         AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);

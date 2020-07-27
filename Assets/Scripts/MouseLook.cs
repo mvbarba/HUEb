@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-	public float mouseSensitivity = 100f;
+    public float cameraShakeIntensity;
+    [SerializeField]
+    Vector3 maximumPositionShake = Vector3.one * 0.5f;
+    private Vector3 orignalCamPosition;
+
+    public float mouseSensitivity = 100f;
 	private float verticalRot = 0f;
 	public Transform playerBody;
 	public float maxRaycastDistance = 10f;
@@ -17,6 +22,7 @@ public class MouseLook : MonoBehaviour
 		hud = GameObject.Find("HUD");
 		playerState = PlayerStateManager.Instance();
 		dimension = DimensionManager.Instance();
+        orignalCamPosition = this.transform.localPosition;
 	}
 
 	public void Update() {
@@ -63,5 +69,18 @@ public class MouseLook : MonoBehaviour
 
 		// Update the HUD
 		hud.GetComponent<Animator>().SetBool("SeesInteractable", playerState.itemSeen != null && playerState.itemHeld == null);
-	}
+
+        // Apply camera shake
+        transform.localPosition = CameraShake() + orignalCamPosition;
+    }
+
+    public Vector3 CameraShake()
+    {
+        Vector3 shakeVector = new Vector3(
+            maximumPositionShake.x * (Mathf.PerlinNoise(0, Time.time * cameraShakeIntensity) * 2 - 1),
+            maximumPositionShake.y * (Mathf.PerlinNoise(1, Time.time * cameraShakeIntensity) * 2 - 1),
+            maximumPositionShake.z * (Mathf.PerlinNoise(2, Time.time * cameraShakeIntensity) * 2 - 1)
+        );
+        return shakeVector;
+    }
 }
