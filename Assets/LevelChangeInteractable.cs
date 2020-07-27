@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonInteractable : Interactable
+public class LevelChangeInteractable : Interactable
 {
     Renderer renderer;
     Color startColor;

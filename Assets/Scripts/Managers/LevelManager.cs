@@ -5,6 +5,9 @@ using System;
 
 public class LevelManager : MonoBehaviour
 {
+    public Transform directionalLight;
+    public LevelChangeInteractable[] levelButtons;
+
     public enum LevelNum
     {
         Level1,
@@ -50,6 +53,23 @@ public class LevelManager : MonoBehaviour
                 Instantiate(level.levelPrefab, levelParent);
             }
         }
+    }
+
+    private IEnumerator LevelTransition(LevelNum levelNum)
+    {
+        yield break;
+    }
+
+    public GameObject GetLevel(LevelNum levelNum)
+    {
+        foreach (LevelContainer level in levels)
+        {
+            if (level.levelNum == levelNum)
+            {
+                return level.levelPrefab;
+            }
+        }
+        return null;
     }
 
     public void ClearLevels()
