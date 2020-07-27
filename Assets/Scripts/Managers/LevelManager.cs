@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public Transform directionalLight;
     public LevelChangeInteractable[] levelButtons;
+    public GameObject particleParent;
 
     public enum LevelNum
     {
@@ -31,7 +32,6 @@ public class LevelManager : MonoBehaviour
     // Where to instantiate levels
     public Transform levelParent;
 
-
     private List<GameObject> instantiatedLevels;
 
     public static LevelManager Instance()
@@ -46,17 +46,24 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel(LevelNum levelNum)
     {
-        foreach (LevelContainer level in levels)
-        {
-            if (level.levelNum == levelNum)
-            {
-                Instantiate(level.levelPrefab, levelParent);
-            }
-        }
+        StartCoroutine(LevelTransition(levelNum));
     }
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        foreach (LevelChangeInteractable button in levelButtons)
+            button.ToggleButton(false);
+        ClearLevels();
+        particleParent.SetActive(true);
+        directionalLight.GetComponent<Animator>().SetBool("LightUp", false);
+        yield return new WaitForSeconds(4f);
+
+        Instantiate(GetLevel(levelNum), levelParent);
+        //At some point, we need to only enable the buttons for levels that are unlocked here
+        foreach (LevelChangeInteractable button in levelButtons)
+            button.ToggleButton(true);
+        particleParent.SetActive(false);
+        directionalLight.GetComponent<Animator>().SetBool("LightUp", true);
         yield break;
     }
 
@@ -74,9 +81,9 @@ public class LevelManager : MonoBehaviour
 
     public void ClearLevels()
     {
-        foreach (GameObject child in levelParent.transform)
+        foreach (Transform child in levelParent.transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
     }
 

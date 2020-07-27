@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -41,5 +42,5 @@ public class PlayerMovement : MonoBehaviour
 		// Apply gravity, dY = 1/2(g) * t^2
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move(velocity * Time.deltaTime);
-	}
+    }
 }

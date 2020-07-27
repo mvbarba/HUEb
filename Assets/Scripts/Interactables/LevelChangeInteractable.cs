@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonInteractable : Interactable
+public class LevelChangeInteractable : Interactable
 {
-    Renderer renderer;
-    Color startColor;
+    public LevelManager.LevelNum level;
+
+    private Renderer renderer;
+    private Color startColor;
+
+    bool canInteract = true;
 
     public override void OnInteract()
     {
-        Debug.Log("Button Pressed!");
+        if (canInteract)
+            LevelManager.Instance().StartLevel(level);
     }
 
     public void Start()
@@ -20,6 +25,7 @@ public class ButtonInteractable : Interactable
 
     public void ToggleButton(bool set)
     {
+        canInteract = set;
         renderer.material.color = set ? startColor : Color.black;
     }
 }
