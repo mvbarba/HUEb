@@ -27,12 +27,9 @@ public class DimensionManager : MonoBehaviour
             Interactable interactable = obj.GetComponent<Interactable>();
             if (interactable)
             {
-                if (interactable.color == Constants.Color.None)
-                    continue;
-                if (interactable.color == Constants.Color.White)
-                    continue;
-                if (interactable.color == color){/* do what we do when the color matches*/}
-                else {/* do what we do when the colors DONT matches*/}
+                bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color;
+                obj.GetComponent<MeshRenderer>().enabled = objectVisible;
+                Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
             }
         }
     }

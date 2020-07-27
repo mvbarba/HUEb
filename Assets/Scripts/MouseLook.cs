@@ -47,7 +47,7 @@ public class MouseLook : MonoBehaviour
 		if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, raycastLayer)) {
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
-			playerState.itemSeen = (obj.GetComponent<Interactable>() != null) ? obj.GetComponent<Interactable>() : null;
+			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled) ? obj.GetComponent<Interactable>() : null;
 		} else {
 			playerState.itemSeen = null;
 		}
