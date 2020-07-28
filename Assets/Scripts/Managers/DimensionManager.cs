@@ -20,10 +20,11 @@ public class DimensionManager : MonoBehaviour
     {
         public PostProcessProfile profile;
         public Constants.Color dimension;
+        public Material skybox;
     }
 
     [SerializeField]
-    public ProfileContainer[] volumeContainers;
+    public ProfileContainer[] profileContainers;
 
     public static DimensionManager Instance()
     {
@@ -56,11 +57,12 @@ public class DimensionManager : MonoBehaviour
             }
         }
 
-        foreach (ProfileContainer container in volumeContainers)
+        foreach (ProfileContainer container in profileContainers)
         {
             if (container.dimension == currentDimension)
             {
                 mainCamera.GetComponent<PostProcessVolume>().profile = container.profile;
+                mainCamera.GetComponent<Skybox>().material = container.skybox;
                 break;
             }
         }

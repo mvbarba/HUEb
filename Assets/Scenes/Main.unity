@@ -9893,6 +9893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bd788e24856d541a41528a0a4623a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeContainers: []
 --- !u!114 &193745924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20692,6 +20693,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1020352234}
   m_PrefabAsset: {fileID: 0}
+--- !u!45 &1800810902
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800810900}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: a26158e2b4f56a347a0502cc4e0fd86b, type: 2}
 --- !u!95 &1800810908
 Animator:
   serializedVersion: 3

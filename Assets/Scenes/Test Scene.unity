@@ -351,17 +351,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bd788e24856d541a41528a0a4623a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeContainers:
-  - profile: {fileID: 11400000, guid: 41e52e18f55e7b043b2030c2dd68dfdf, type: 2}
-    dimension: 0
+  profileContainers:
   - profile: {fileID: 11400000, guid: 41e52e18f55e7b043b2030c2dd68dfdf, type: 2}
     dimension: 1
+    skybox: {fileID: 2100000, guid: 9e78df840e445874da7a03747bb91825, type: 2}
+  - profile: {fileID: 11400000, guid: 41e52e18f55e7b043b2030c2dd68dfdf, type: 2}
+    dimension: 0
+    skybox: {fileID: 2100000, guid: 9e78df840e445874da7a03747bb91825, type: 2}
   - profile: {fileID: 11400000, guid: 5dc65967cd540384bbeae4d8180b6d69, type: 2}
     dimension: 2
+    skybox: {fileID: 2100000, guid: a26158e2b4f56a347a0502cc4e0fd86b, type: 2}
   - profile: {fileID: 11400000, guid: ac9884440e98e8243954c075c55ab80f, type: 2}
     dimension: 3
+    skybox: {fileID: 2100000, guid: 9d9adac4f4d871745a84695a791217f6, type: 2}
   - profile: {fileID: 11400000, guid: 5407fa897cede204496bfd9308f71222, type: 2}
     dimension: 4
+    skybox: {fileID: 2100000, guid: 426e8378abc119f4cbc2439d0189e313, type: 2}
 --- !u!114 &143218179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +460,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 808430301}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &374716862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9151741748074549853, guid: 4aea5a9963c04974dac7478d4e38de24,
+    type: 3}
+  m_PrefabInstance: {fileID: 74900189229877387}
+  m_PrefabAsset: {fileID: 0}
+--- !u!45 &374716870
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374716862}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 9e78df840e445874da7a03747bb91825, type: 2}
 --- !u!4 &393266211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7339649273629683794, guid: b7224de46198f8146a1c3cc5bb2bd641,
@@ -1163,6 +1183,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343914879357242320, guid: 4aea5a9963c04974dac7478d4e38de24,
+        type: 3}
+      propertyPath: m_ShowToolkit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343914879357242320, guid: 4aea5a9963c04974dac7478d4e38de24,
+        type: 3}
+      propertyPath: m_ShowCustomSorter
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3927023094062601248, guid: 4aea5a9963c04974dac7478d4e38de24,
         type: 3}
