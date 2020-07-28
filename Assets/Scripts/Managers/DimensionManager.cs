@@ -67,4 +67,27 @@ public class DimensionManager : MonoBehaviour
             }
         }
     }
+
+    public void EnterForcefield()
+    {
+        EnableAllRenderers(true);
+    }
+
+    public void ExitForcefield()
+    {
+        ChangeDimension(currentDimension);
+    }
+
+    private void EnableAllRenderers(bool set)
+    {
+        List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
+        foreach (GameObject obj in objects)
+        {
+            Interactable interactable = obj.GetComponent<Interactable>();
+            if (interactable)
+            {
+                obj.GetComponent<MeshRenderer>().enabled = set;
+            }
+        }
+    }
 }
