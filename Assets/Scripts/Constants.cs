@@ -33,4 +33,21 @@ public static class Constants
 			return new UnityEngine.Color(1, 0, 1);
 		}
 	}
+
+	public static LayerMask GetLayerMask(Color color) {
+		switch (color) {
+			default: {
+				return 0;
+			}
+			case Color.Red: {
+				return 14;
+			}
+			case Color.Blue: {
+				return 12;
+			}
+			case Color.Green: {
+				return 13;
+			}
+		}
+	}
 }

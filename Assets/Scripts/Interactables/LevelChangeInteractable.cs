@@ -20,12 +20,12 @@ public class LevelChangeInteractable : Interactable
     public void Start()
     {
         renderer = GetComponent<Renderer>();
-        startColor = renderer.material.color;
+        //startColor = renderer.material.color;
     }
 
     public void ToggleButton(bool set)
     {
         canInteract = set;
-        renderer.material.color = set ? startColor : Color.black;
+        //renderer.material.color = set ? startColor : Color.black;
     }
 }
