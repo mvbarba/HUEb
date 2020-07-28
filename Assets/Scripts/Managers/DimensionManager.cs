@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering.PostProcessing;
 
 public class DimensionManager : MonoBehaviour
 {
     private static DimensionManager instance;
 
+    private Camera mainCamera;
+
     public Constants.Color currentDimension {
         get;
         private set;
     } = Constants.Color.None;
+
+    [System.Serializable]
+    public struct ProfileContainer
+    {
+        public PostProcessProfile profile;
+        public Constants.Color dimension;
+    }
+
+    [SerializeField]
+    public ProfileContainer[] volumeContainers;
 
     public static DimensionManager Instance()
     {
@@ -22,7 +35,12 @@ public class DimensionManager : MonoBehaviour
         instance = this;
     }
 
-   public void ChangeDimension(Constants.Color color)
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
+    public void ChangeDimension(Constants.Color color)
     {
         currentDimension = color;
         
@@ -35,6 +53,15 @@ public class DimensionManager : MonoBehaviour
                 bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color;
                 obj.GetComponent<MeshRenderer>().enabled = objectVisible;
                 Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
+            }
+        }
+
+        foreach (ProfileContainer container in volumeContainers)
+        {
+            if (container.dimension == currentDimension)
+            {
+                mainCamera.GetComponent<PostProcessVolume>().profile = container.profile;
+                break;
             }
         }
     }

@@ -331,9 +331,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 19634329}
-  - {fileID: 265558963}
   - {fileID: 1841757031}
   - {fileID: 612705606}
+  - {fileID: 265558963}
   - {fileID: 393266211}
   - {fileID: 1343275482}
   m_Father: {fileID: 0}
@@ -351,6 +351,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bd788e24856d541a41528a0a4623a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeContainers:
+  - profile: {fileID: 11400000, guid: 41e52e18f55e7b043b2030c2dd68dfdf, type: 2}
+    dimension: 0
+  - profile: {fileID: 11400000, guid: 41e52e18f55e7b043b2030c2dd68dfdf, type: 2}
+    dimension: 1
+  - profile: {fileID: 11400000, guid: 5dc65967cd540384bbeae4d8180b6d69, type: 2}
+    dimension: 2
+  - profile: {fileID: 11400000, guid: ac9884440e98e8243954c075c55ab80f, type: 2}
+    dimension: 3
+  - profile: {fileID: 11400000, guid: 5407fa897cede204496bfd9308f71222, type: 2}
+    dimension: 4
 --- !u!114 &143218179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +374,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303879c8c1a68c7448f66b414e4a7784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionalLight: {fileID: 0}
+  levelButtons: []
+  particleParent: {fileID: 0}
+  levelTransitionDelay: 0
   levels: []
   levelParent: {fileID: 143218177}
 --- !u!1001 &264905879
