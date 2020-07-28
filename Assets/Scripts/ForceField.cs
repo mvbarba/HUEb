@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForceField : MonoBehaviour
+public class Forcefield : MonoBehaviour
 {
-    private PlayerStateManager playerState;
-
-    private void Start() {
-        playerState = PlayerStateManager.Instance();
+    private void Start()
+    {
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), Camera.main.GetComponentInParent<CharacterController>());
     }
 
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log("Trigger entry");
-        if (other.gameObject == playerState.gameObject) {
-            Debug.Log("player is here");
-        }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
     }
 
-    private void OnTriggerExit(Collider other) {
-        
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if (other.gameObject.tag == "CameraCenter")
+            DimensionManager.Instance().EnterForcefield();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "CameraCenter")
+            DimensionManager.Instance().ExitForcefield();
     }
 }
