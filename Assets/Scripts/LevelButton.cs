@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[ExecuteAlways]
 public class LevelButton : MonoBehaviour
 {
     private TextMeshPro label;
@@ -11,7 +12,6 @@ public class LevelButton : MonoBehaviour
     public Material onMat;
     private bool isOn = false;
     public bool startOn = false;
-
 
     private void Start() {
         label = GetComponentInChildren<TextMeshPro>();
