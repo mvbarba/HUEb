@@ -21,7 +21,9 @@ public class PickupInteractable : Interactable
 		mainCamera = Camera.main;
 		pickupDistance = mainCamera.GetComponent<MouseLook>().maxRaycastDistance * 0.9f;
 		//OnInteract();
+		gameObject.layer = Constants.GetLayerMask(this.color);
 	}
+
 
 	public override void OnInteract()
 	{
