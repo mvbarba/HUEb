@@ -8,6 +8,7 @@ TagManager:
   - Red
   - Green
   - Blue
+  - CameraCenter
   layers:
   - Default
   - TransparentFX

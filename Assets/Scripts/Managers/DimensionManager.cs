@@ -41,9 +41,10 @@ public class DimensionManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void ChangeDimension(Constants.Color color)
+    public void ChangeDimension(Constants.Color color, bool forcefield = false)
     {
-        currentDimension = color;
+        if (!forcefield)
+            currentDimension = color;
         
         List<GameObject> objects= LevelManager.Instance().GetLevelObjects();
         foreach (GameObject obj in objects)
@@ -51,26 +52,33 @@ public class DimensionManager : MonoBehaviour
             Interactable interactable = obj.GetComponent<Interactable>();
             if (interactable)
             {
-                bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color;
-                obj.GetComponent<MeshRenderer>().enabled = objectVisible;
+                bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color || color == Constants.Color.White;
                 Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
+
+                DissolveScript dissolve = obj.GetComponent<DissolveScript>();
+                if (dissolve)
+                {
+                    dissolve.SetDissolve(!objectVisible);
+                }
             }
         }
-
-        foreach (ProfileContainer container in profileContainers)
+        if (!forcefield)
         {
-            if (container.dimension == currentDimension)
+            foreach (ProfileContainer container in profileContainers)
             {
-                mainCamera.GetComponent<PostProcessVolume>().profile = container.profile;
-                mainCamera.GetComponent<Skybox>().material = container.skybox;
-                break;
+                if (container.dimension == currentDimension)
+                {
+                    mainCamera.GetComponent<PostProcessVolume>().profile = container.profile;
+                    mainCamera.GetComponent<Skybox>().material = container.skybox;
+                    break;
+                }
             }
         }
     }
 
     public void EnterForcefield()
     {
-        EnableAllRenderers(true);
+        ChangeDimension(Constants.Color.White, true);
     }
 
     public void ExitForcefield()
