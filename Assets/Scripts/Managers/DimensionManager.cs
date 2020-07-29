@@ -41,8 +41,33 @@ public class DimensionManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+    string[] layers;
+
     public void ChangeDimension(Constants.Color color, bool forcefield = false)
     {
+        switch (color)
+        {
+            case Constants.Color.White:
+            case Constants.Color.None:
+                {
+                    layers = new string[] { "Default", "Ground" };
+                    break;
+                }
+            case Constants.Color.Red:
+            case Constants.Color.Blue:
+            case Constants.Color.Green:
+                {
+                    layers = new string[] { "Default", "Ground", "White", color.ToString() };
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        PlayerMovement.Instance().groundMask = LayerMask.GetMask(layers);
+
         // Don't change current dimension when we are entering the forcefield
         if (color != Constants.Color.White)
             currentDimension = color;
