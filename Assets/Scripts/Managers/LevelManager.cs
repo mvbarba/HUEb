@@ -8,6 +8,9 @@ public class LevelManager : MonoBehaviour
     public Transform directionalLight;
     public LevelChangeInteractable[] levelButtons;
     public GameObject particleParent;
+    public GameObject forcefield;
+    private List<Collider> forcefieldColliders;
+    private PlayerMovement player;
 
     public float levelTransitionDelay;
 
@@ -54,15 +57,23 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        ToggleForcefield(false);
+        float movementSpeed = player.movementSpeed;
+        player.movementSpeed = 0f;
         AudioManager.Instance().Play("Elevator");
         Camera.main.GetComponent<Animator>().SetTrigger("Shake");
         foreach (LevelChangeInteractable button in levelButtons)
             button.SetOn(false);
-        ClearLevels();
         particleParent.SetActive(true);
         directionalLight.GetComponent<Animator>().SetTrigger("LightDown");
+        DimensionManager.Instance().ChangeDimension(Constants.Color.None, true);
+
         yield return new WaitForSeconds(levelTransitionDelay);
 
+        player.movementSpeed = movementSpeed;
+        ClearLevels();
+        ToggleForcefield(true);
+        DimensionManager.Instance().ChangeDimension(Constants.Color.White, true);
         AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
@@ -102,10 +113,25 @@ public class LevelManager : MonoBehaviour
         return objects;
     }
 
+    public void ToggleForcefield(bool set)
+    {
+        foreach (Collider col in forcefieldColliders)
+        {
+            //col.enabled = set;
+            col.gameObject.SetActive(set);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-
+        forcefieldColliders = new List<Collider>();
+        foreach (Collider col in forcefield.GetComponentsInChildren<Collider>())
+        {
+            if (col.gameObject.name != "Hitbox")
+                forcefieldColliders.Add(col);
+        }
+        player = PlayerMovement.Instance();
     }
 
     // Update is called once per frame

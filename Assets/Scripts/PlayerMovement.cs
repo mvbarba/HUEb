@@ -5,7 +5,19 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerMovement : MonoBehaviour
 {
-	public Transform groundCheck;
+    private static PlayerMovement instance;
+
+    public static PlayerMovement Instance()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public Transform groundCheck;
 	public CharacterController controller;
 	public float movementSpeed = 12f;
 	public float groundDistance = 0.4f;

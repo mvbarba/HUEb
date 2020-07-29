@@ -43,26 +43,30 @@ public class DimensionManager : MonoBehaviour
 
     public void ChangeDimension(Constants.Color color, bool forcefield = false)
     {
-        if (!forcefield)
+        // Don't change current dimension when we are entering the forcefield
+        if (color != Constants.Color.White)
             currentDimension = color;
-        
-        List<GameObject> objects= LevelManager.Instance().GetLevelObjects();
-        foreach (GameObject obj in objects)
+        if (forcefield)
         {
-            Interactable interactable = obj.GetComponent<Interactable>();
-            if (interactable)
+            List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
+            foreach (GameObject obj in objects)
             {
-                bool objectVisible = interactable.color == Constants.Color.White || interactable.color == color || color == Constants.Color.White;
-                Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
-
-                DissolveScript dissolve = obj.GetComponent<DissolveScript>();
-                if (dissolve)
+                Interactable interactable = obj.GetComponent<Interactable>();
+                if (interactable)
                 {
-                    dissolve.SetDissolve(!objectVisible);
+                    bool objectVisible = (interactable.color == Constants.Color.White || interactable.color == color || color == Constants.Color.White) && color != Constants.Color.None;
+                    Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
+
+                    DissolveScript dissolve = obj.GetComponent<DissolveScript>();
+                    if (dissolve)
+                    {
+                        dissolve.SetDissolve(!objectVisible);
+                    }
                 }
             }
+
         }
-        if (!forcefield)
+        if (color != Constants.Color.White)
         {
             foreach (ProfileContainer container in profileContainers)
             {
@@ -83,7 +87,7 @@ public class DimensionManager : MonoBehaviour
 
     public void ExitForcefield()
     {
-        ChangeDimension(currentDimension);
+        ChangeDimension(currentDimension, true);
     }
 
     private void EnableAllRenderers(bool set)

@@ -17,6 +17,8 @@ public class MouseLook : MonoBehaviour
 	private PlayerStateManager playerState;
 	private DimensionManager dimension;
 
+    private string[] layers;
+
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
 		hud = GameObject.Find("HUD");
@@ -50,7 +52,11 @@ public class MouseLook : MonoBehaviour
 
 		// Check if the player sees an interactable
 		RaycastHit raycastHit;
-		if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, LayerMask.GetMask(dimension.currentDimension.ToString(), "Default"))) {
+        if (dimension.currentDimension == Constants.Color.None)
+            layers = new string[] { "Default" };
+        else
+            layers = new string[] { dimension.currentDimension.ToString(), "Default", "White" };
+       	if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, LayerMask.GetMask(layers))) {
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
 			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled) ? obj.GetComponent<Interactable>() : null;

@@ -39,7 +39,10 @@ public static class Constants
 			default: {
 				return 0;
 			}
-			case Color.Red: {
+            case Color.White:{
+                return 11;
+            }
+            case Color.Red: {
 				return 14;
 			}
 			case Color.Blue: {
