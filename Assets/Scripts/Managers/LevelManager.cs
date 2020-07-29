@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
 
     public enum LevelNum
     {
+        None,
         Level1,
         Level2,
         Level3,
@@ -56,7 +57,7 @@ public class LevelManager : MonoBehaviour
         AudioManager.Instance().Play("Elevator");
         Camera.main.GetComponent<Animator>().SetTrigger("Shake");
         foreach (LevelChangeInteractable button in levelButtons)
-            button.ToggleButton(false);
+            button.SetOn(false);
         ClearLevels();
         particleParent.SetActive(true);
         directionalLight.GetComponent<Animator>().SetTrigger("LightDown");
@@ -66,7 +67,7 @@ public class LevelManager : MonoBehaviour
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
         foreach (LevelChangeInteractable button in levelButtons)
-            button.ToggleButton(true);
+            button.SetOn(true);
         particleParent.SetActive(false);
         yield break;
     }

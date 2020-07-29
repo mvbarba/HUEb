@@ -162,8 +162,8 @@ MonoBehaviour:
   controller: {fileID: 74900188774957491}
   movementSpeed: 9
   groundDistance: 0.5
-  gravity: -20
-  jumpForce: 3
+  gravity: -25
+  jumpForce: 1.2
   groundMask:
     serializedVersion: 2
     m_Bits: 29697
@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 5207739701747068089}
   - component: {fileID: 3927023094062601248}
   - component: {fileID: 374716870}
+  - component: {fileID: 9118788453110733803}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -433,3 +434,22 @@ Skybox:
   m_GameObject: {fileID: 9151741748074549853}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 9e78df840e445874da7a03747bb91825, type: 2}
+--- !u!95 &9118788453110733803
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9151741748074549853}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d6c2754883ccf944ac3b67576fe1e4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
