@@ -15,8 +15,6 @@ public class LevelChangeInteractable : Interactable
     }
 
     private TextMeshPro label;
-    public Material offMat;
-    public Material onMat;
     private bool isOn = false;
     public bool startOn = false;
 
@@ -32,6 +30,13 @@ public class LevelChangeInteractable : Interactable
     public void SetOn(bool isOn)
     {
         this.isOn = isOn;
-        GetComponent<MeshRenderer>().material = this.isOn ? onMat : offMat;
+        Material mat = new Material(GetComponent<Renderer>().sharedMaterial);
+        if (mat)
+        {
+            UnityEngine.Color uCol = Constants.GetColor(this.color);
+            mat.color = uCol;
+            mat.SetColor("_EmissionColor", uCol * (isOn ? 2 : 0));
+        }
+        GetComponent<Renderer>().sharedMaterial = mat;
     }
 }

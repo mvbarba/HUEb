@@ -42,6 +42,9 @@ public class LevelManager : MonoBehaviour
 
     private List<GameObject> instantiatedLevels;
 
+    // Buttons for changing dimensions
+    public UniverseToggleInteractable[] dimensionButtons;
+
     public static LevelManager Instance()
     {
         return instance;
@@ -59,6 +62,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        ToggleDimensionButtons(false);
         ToggleForcefield(false);
         float movementSpeed = player.movementSpeed;
         player.movementSpeed = 0f;
@@ -74,6 +78,7 @@ public class LevelManager : MonoBehaviour
 
         player.movementSpeed = movementSpeed;
         ClearLevels();
+        ToggleDimensionButtons(true);
         ToggleForcefield(true);
         DimensionManager.Instance().ChangeDimension(Constants.Color.White, true);
         AudioManager.Instance().Play("Ding");
@@ -121,6 +126,14 @@ public class LevelManager : MonoBehaviour
         {
             //col.enabled = set;
             col.gameObject.SetActive(set);
+        }
+    }
+
+    public void ToggleDimensionButtons(bool set)
+    {
+        foreach (UniverseToggleInteractable button in dimensionButtons)
+        {
+            button.SetOn(set);
         }
     }
 
