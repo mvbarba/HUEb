@@ -6,7 +6,6 @@ using System;
 public class LevelManager : MonoBehaviour
 {
     public Transform directionalLight;
-    public LevelChangeInteractable[] levelButtons;
     public GameObject particleParent;
     public GameObject forcefield;
     private List<Collider> forcefieldColliders;
@@ -20,7 +19,9 @@ public class LevelManager : MonoBehaviour
         Level1,
         Level2,
         Level3,
-        Level4
+        Level4,
+        Level5,
+        Level6
     }
 
     [System.Serializable]
@@ -28,6 +29,7 @@ public class LevelManager : MonoBehaviour
     {
         public GameObject levelPrefab;
         public LevelNum levelNum;
+        public LevelChangeInteractable button;
     }
 
     [SerializeField]
@@ -62,8 +64,8 @@ public class LevelManager : MonoBehaviour
         player.movementSpeed = 0f;
         AudioManager.Instance().Play("Elevator");
         Camera.main.GetComponent<Animator>().SetTrigger("Shake");
-        foreach (LevelChangeInteractable button in levelButtons)
-            button.SetOn(false);
+        foreach (LevelContainer level in levels)
+            level.button.SetOn(false);
         particleParent.SetActive(true);
         directionalLight.GetComponent<Animator>().SetTrigger("LightDown");
         DimensionManager.Instance().ChangeDimension(Constants.Color.None, true);
@@ -77,8 +79,8 @@ public class LevelManager : MonoBehaviour
         AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
-        foreach (LevelChangeInteractable button in levelButtons)
-            button.SetOn(true);
+        foreach (LevelContainer level in levels)
+            level.button.SetOn(true);
         particleParent.SetActive(false);
         yield break;
     }
