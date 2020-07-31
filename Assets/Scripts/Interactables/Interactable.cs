@@ -8,6 +8,7 @@ public abstract class Interactable : MonoBehaviour
 {
     public Constants.Color color;
     public abstract void OnInteract();
+    public float maxDistance;
 
     private void Awake()
     {

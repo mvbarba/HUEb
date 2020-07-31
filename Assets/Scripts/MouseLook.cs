@@ -11,7 +11,6 @@ public class MouseLook : MonoBehaviour
     public float mouseSensitivity = 100f;
 	private float verticalRot = 0f;
 	public Transform playerBody;
-	public float maxRaycastDistance = 10f;
 	public bool seesInteractable = false;
 	private GameObject hud;
 	private PlayerStateManager playerState;
@@ -56,11 +55,13 @@ public class MouseLook : MonoBehaviour
             layers = new string[] { "Default" };
         else
             layers = new string[] { dimension.currentDimension.ToString(), "Default", "White" };
-       	if (Physics.Raycast(transform.position, transform.forward, out raycastHit, maxRaycastDistance, LayerMask.GetMask(layers))) {
+       	if (Physics.Raycast(transform.position, transform.forward, out raycastHit,Constants.maxRaycastDistance, LayerMask.GetMask(layers))) {
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
-			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled) ? obj.GetComponent<Interactable>() : null;
-		} else {
+            float distance = Vector3.Distance(this.gameObject.transform.position, obj.transform.position);
+			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled && distance <= obj.GetComponent<Interactable>().maxDistance) ? obj.GetComponent<Interactable>() : null;
+		} 
+        else {
 			playerState.itemSeen = null;
 		}
 

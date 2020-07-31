@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Constants 
-{	
-	// The integer value is equal to the layer mask
-	// this color corresponds to
-	public enum Color
+{
+    public static float maxRaycastDistance = 3f;
+
+    // The integer value is equal to the layer mask
+    // this color corresponds to
+    public enum Color
 	{
 		None,
 		White,

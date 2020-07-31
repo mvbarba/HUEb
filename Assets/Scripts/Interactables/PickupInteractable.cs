@@ -19,7 +19,7 @@ public class PickupInteractable : Interactable
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		pickupPosition = Camera.main.transform.forward * 5f;
 		mainCamera = Camera.main;
-		pickupDistance = mainCamera.GetComponent<MouseLook>().maxRaycastDistance * 0.9f;
+		//pickupDistance = mainCamera.GetComponent<MouseLook>().maxRaycastDistance * 0.9f;
 		//OnInteract();
 		gameObject.layer = Constants.GetLayerMask(this.color);
 	}
@@ -29,7 +29,8 @@ public class PickupInteractable : Interactable
 	{
 		Debug.Log("Object picked up: " + gameObject.name);
 		playerState.itemHeld = this;
-		isPickedUp = true;
+        pickupDistance = maxDistance * 0.9f;
+        isPickedUp = true;
 		rb.useGravity = false;
 		rb.freezeRotation = true;
 	}
