@@ -29,7 +29,7 @@ public class PickupInteractable : Interactable
 	{
 		Debug.Log("Object picked up: " + gameObject.name);
 		playerState.itemHeld = this;
-        pickupDistance = maxDistance * 0.9f;
+        pickupDistance = maxDistance * 0.8f;
         isPickedUp = true;
 		rb.useGravity = false;
 		rb.freezeRotation = true;

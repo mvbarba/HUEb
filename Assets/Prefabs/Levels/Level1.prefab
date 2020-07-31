@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 4
+  maxDistance: 1
 --- !u!114 &4033388153607498442
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class MouseLook : MonoBehaviour
        	if (Physics.Raycast(transform.position, transform.forward, out raycastHit,Constants.maxRaycastDistance, LayerMask.GetMask(layers))) {
 			// Check if the object they're looking at is interactable
 			GameObject obj = raycastHit.transform.gameObject;
-            float distance = Vector3.Distance(this.gameObject.transform.position, obj.transform.position);
+            float distance = raycastHit.distance;
 			playerState.itemSeen = (obj.GetComponent<Interactable>() != null && obj.GetComponent<MeshRenderer>().enabled && distance <= obj.GetComponent<Interactable>().maxDistance) ? obj.GetComponent<Interactable>() : null;
 		} 
         else {
