@@ -64,6 +64,8 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        DimensionManager dimension = DimensionManager.Instance();
+        dimension.locked = true;
         List<GameObject> objects = GetLevelObjects();
         foreach (GameObject obj in objects)
         {
@@ -90,12 +92,13 @@ public class LevelManager : MonoBehaviour
         player.movementSpeed = movementSpeed;
         ClearLevels();
         ToggleForcefield(true);
-        DimensionManager.Instance().ChangeDimension(Constants.Color.White, true);
+        dimension.ChangeDimension(Constants.Color.White, true);
         AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
         UpdateLevelButtonLights();
         particleParent.SetActive(false);
+        dimension.locked = false;
         yield break;
     }
 
@@ -156,6 +159,9 @@ public class LevelManager : MonoBehaviour
         // At this point, we can assume the level is complete
         PlayerPrefs.SetInt((currentLevelNum + 1).ToString(), 1);
         UpdateLevelButtonLights();
+        DimensionManager dimension = DimensionManager.Instance();
+        dimension.ChangeDimension(Constants.Color.None, true);
+        dimension.locked = true;
         return true;
 	}
 

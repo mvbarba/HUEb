@@ -49,12 +49,15 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		// Check for universe switching
-		if (Input.GetButtonDown("RedU")) {
-			dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield);
-		} else if (Input.GetButtonDown("GreenU")) {
-			dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield);
-		} else if (Input.GetButtonDown("BlueU")) {
-			dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield);
+		if (!dimension.locked) {
+
+			if (Input.GetButtonDown("RedU")) {
+				dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield);
+			} else if (Input.GetButtonDown("GreenU")) {
+				dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield);
+			} else if (Input.GetButtonDown("BlueU")) {
+				dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield);
+			}
 		}
 
 		// Get the player WASD input

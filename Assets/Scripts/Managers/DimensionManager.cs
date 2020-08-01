@@ -7,7 +7,7 @@ using UnityEngine.Rendering.PostProcessing;
 public class DimensionManager : MonoBehaviour
 {
     private static DimensionManager instance;
-
+    public bool locked = false;
     private Camera mainCamera;
 
     public Constants.Color currentDimension {
@@ -49,10 +49,25 @@ public class DimensionManager : MonoBehaviour
 
     public void ChangeDimension(Constants.Color color, bool forcefield = false)
     {
+        List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
+        foreach (GameObject obj in objects) {
+            if (obj.tag == "DestroyOnLoad") {
+                obj.GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+
         switch (color)
         {
-            case Constants.Color.White:
             case Constants.Color.None:
+                foreach (GameObject obj in objects) {
+                    if (obj.tag == "DestroyOnLoad") {
+                        obj.GetComponent<MeshRenderer>().enabled = false;
+                    }
+                }
+                layers = new string[] { "Default", "Ground" };
+
+                break;
+            case Constants.Color.White:
                 {
                     layers = new string[] { "Default", "Ground" };
                     break;
@@ -77,7 +92,6 @@ public class DimensionManager : MonoBehaviour
             currentDimension = color;
         if (forcefield)
         {
-            List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
             foreach (GameObject obj in objects)
             {
                 Interactable interactable = obj.GetComponent<Interactable>();
