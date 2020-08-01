@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public GameObject forcefield;
     private List<Collider> forcefieldColliders;
     private PlayerMovement player;
-
+    private LevelNum currentLevelNum = LevelNum.Level1;
 
     public float levelTransitionDelay;
 
@@ -58,11 +58,13 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel(LevelNum levelNum)
     {
+        currentLevelNum = levelNum;
         StartCoroutine(LevelTransition(levelNum));
     }
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        PlayerPrefs.SetInt(levelNum.ToString(), 1);
         ToggleForcefield(false);
         float movementSpeed = player.movementSpeed;
         player.movementSpeed = 0f;
@@ -83,8 +85,7 @@ public class LevelManager : MonoBehaviour
         AudioManager.Instance().Play("Ding");
         Instantiate(GetLevel(levelNum), levelParent);
         //At some point, we need to only enable the buttons for levels that are unlocked here
-        foreach (LevelContainer level in levels)
-            level.button.SetOn(true);
+        UpdateLevelButtonLights();
         particleParent.SetActive(false);
         yield break;
     }
@@ -128,6 +129,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void UpdateLevelButtonLights() {
+        foreach (LevelContainer level in levels) {
+            level.button.SetOn(PlayerPrefs.GetInt(level.levelNum.ToString()) == 1); 
+        }
+    }
+
     public bool CheckComplete() {
         Transform currentLevel = instance.levelParent;
         ObjectiveInteractable[] objectives = currentLevel.gameObject.GetComponentsInChildren<ObjectiveInteractable>();
@@ -136,6 +143,10 @@ public class LevelManager : MonoBehaviour
                 return false;
 			}
 		}
+
+        // At this point, we can assume the level is complete
+        PlayerPrefs.SetInt((currentLevelNum + 1).ToString(), 1);
+        UpdateLevelButtonLights();
         return true;
 	}
 
@@ -149,6 +160,7 @@ public class LevelManager : MonoBehaviour
                 forcefieldColliders.Add(col);
         }
         player = PlayerMovement.Instance();
+
     }
 
 
