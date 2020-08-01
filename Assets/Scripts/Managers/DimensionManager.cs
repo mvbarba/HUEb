@@ -14,6 +14,10 @@ public class DimensionManager : MonoBehaviour
         get;
         private set;
     } = Constants.Color.None;
+    public bool inForcefield {
+        get;
+        private set;
+    } = false;
 
     [System.Serializable]
     public struct ProfileContainer
@@ -108,11 +112,13 @@ public class DimensionManager : MonoBehaviour
     public void EnterForcefield()
     {
         ChangeDimension(Constants.Color.White, true);
+        inForcefield = true;
     }
 
     public void ExitForcefield()
     {
         ChangeDimension(currentDimension, true);
+        inForcefield = false;
     }
 
     private void EnableAllRenderers(bool set)
