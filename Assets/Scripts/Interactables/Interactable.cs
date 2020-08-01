@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[ExecuteAlways]
 public abstract class Interactable : MonoBehaviour
 {
     public Constants.Color color;
