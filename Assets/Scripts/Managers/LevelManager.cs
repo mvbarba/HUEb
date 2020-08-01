@@ -64,6 +64,15 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelTransition(LevelNum levelNum)
     {
+        List<GameObject> objects = GetLevelObjects();
+        foreach (GameObject obj in objects)
+        {
+            if (obj.tag == "DestroyOnLoad")
+            {
+                Destroy(obj);
+            }
+        }
+
         PlayerPrefs.SetInt(levelNum.ToString(), 1);
         ToggleForcefield(false);
         float movementSpeed = player.movementSpeed;

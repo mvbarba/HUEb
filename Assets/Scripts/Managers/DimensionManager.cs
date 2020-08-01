@@ -83,7 +83,7 @@ public class DimensionManager : MonoBehaviour
                 Interactable interactable = obj.GetComponent<Interactable>();
                 if (interactable)
                 {
-                    bool objectVisible = (interactable.color == Constants.Color.White || interactable.color == color || color == Constants.Color.White) && color != Constants.Color.None;
+                    bool objectVisible = (interactable.color == Constants.Color.White || interactable.color == Constants.Color.None || interactable.color == color || color == Constants.Color.White) && color != Constants.Color.None;
                     Physics.IgnoreCollision(obj.GetComponent<Collider>(), PlayerStateManager.Instance().gameObject.GetComponent<CharacterController>(), !objectVisible);
 
                     DissolveScript dissolve = obj.GetComponent<DissolveScript>();

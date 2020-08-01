@@ -13,9 +13,12 @@ public abstract class Interactable : MonoBehaviour
         Material mat = new Material(GetComponent<Renderer>().sharedMaterial);
         if (mat)
         {
-            UnityEngine.Color uCol = Constants.GetColor(this.color);
-            mat.color = uCol;
-            mat.SetColor("_EmissionColor", uCol * 2);
+            if (this.color != Constants.Color.None)
+            {
+                UnityEngine.Color uCol = Constants.GetColor(this.color);
+                mat.color = uCol;
+                mat.SetColor("_EmissionColor", uCol * 2);
+            }
         }
 
         GetComponent<Renderer>().sharedMaterial = mat;
@@ -23,11 +26,15 @@ public abstract class Interactable : MonoBehaviour
 
     private void OnEnable() {
 		Material mat = new Material(GetComponent<Renderer>().sharedMaterial);
-		if (mat) {
-			UnityEngine.Color uCol = Constants.GetColor(this.color);
-			mat.color = uCol;
-			mat.SetColor("_EmissionColor", uCol * 2);
-		}
+		if (mat)
+        {
+            if (this.color != Constants.Color.None)
+            {
+                UnityEngine.Color uCol = Constants.GetColor(this.color);
+                mat.color = uCol;
+                mat.SetColor("_EmissionColor", uCol * 2);
+            }
+        }
 
 		GetComponent<Renderer>().sharedMaterial = mat;
 	}
