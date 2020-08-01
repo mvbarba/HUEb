@@ -28,6 +28,10 @@ public class MouseLook : MonoBehaviour
 
 	public void Update() {
 
+		if (Input.GetKeyDown("g")) {
+			Debug.Log(LevelManager.Instance().CheckComplete());
+		}
+
 		// Unlock the mouse cursor if "F" is pressed
 		if (Input.GetButtonDown("Free Camera")) {
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;

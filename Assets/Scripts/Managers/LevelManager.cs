@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     private List<Collider> forcefieldColliders;
     private PlayerMovement player;
 
+
     public float levelTransitionDelay;
 
     public enum LevelNum
@@ -137,6 +138,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public bool CheckComplete() {
+        Transform currentLevel = instance.levelParent;
+        ObjectiveInteractable[] objectives = currentLevel.gameObject.GetComponentsInChildren<ObjectiveInteractable>();
+        foreach (ObjectiveInteractable o in objectives) {
+            if (!o.CheckComplete()) {
+                return false;
+			}
+		}
+        return true;
+	}
+
     // Start is called before the first frame update
     void Start()
     {
@@ -149,9 +161,5 @@ public class LevelManager : MonoBehaviour
         player = PlayerMovement.Instance();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

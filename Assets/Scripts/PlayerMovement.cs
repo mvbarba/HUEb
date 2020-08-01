@@ -27,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
 	
 	private bool isGrounded = false;
 	private Vector3 velocity;
+	private DimensionManager dimension;
+
+	private void Start() {
+		dimension = DimensionManager.Instance();
+	}
 
 	public void Update() {
 
@@ -41,6 +46,15 @@ public class PlayerMovement : MonoBehaviour
 		// If the player is on the ground, let them jump if they wish
 		if (Input.GetButtonDown("Jump") && isGrounded) {
 			velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+		}
+
+		// Check for universe switching
+		if (Input.GetButtonDown("RedU")) {
+			dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield);
+		} else if (Input.GetButtonDown("GreenU")) {
+			dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield);
+		} else if (Input.GetButtonDown("BlueU")) {
+			dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield);
 		}
 
 		// Get the player WASD input

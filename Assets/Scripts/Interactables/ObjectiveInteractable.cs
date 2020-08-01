@@ -5,6 +5,7 @@ public class ObjectiveInteractable : Interactable {
 
 	public override void OnInteract() {
 		isComplete = true;
+		LevelManager.Instance().CheckComplete();
 	}
 
 	public bool CheckComplete() {
