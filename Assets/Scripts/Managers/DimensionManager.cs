@@ -47,8 +47,11 @@ public class DimensionManager : MonoBehaviour
 
     string[] layers;
 
-    public void ChangeDimension(Constants.Color color, bool forcefield = false)
+    // Returns whether the dimension changed or not
+    public bool ChangeDimension(Constants.Color color, bool forcefield = false)
     {
+        Constants.Color oldDimension = currentDimension;
+
         List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
         foreach (GameObject obj in objects) {
             if (obj.tag == "DestroyOnLoad") {
@@ -121,6 +124,7 @@ public class DimensionManager : MonoBehaviour
                 }
             }
         }
+        return (oldDimension != color);
     }
 
     public void EnterForcefield()
