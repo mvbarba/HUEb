@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 	private DimensionManager dimension;
 
     private AudioManager audio;
+    public UIManager ui; 
 
 	private void Start() {
 		dimension = DimensionManager.Instance();
@@ -46,6 +47,11 @@ public class PlayerMovement : MonoBehaviour
 		if (isGrounded && velocity.y < 0) {
 			velocity.y = 0f;
 		}
+
+        // Open UI
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            ui.ToggleUI();
+        }
 		
 		// If the player is on the ground, let them jump if they wish
 		if (Input.GetButtonDown("Jump") && isGrounded) {
