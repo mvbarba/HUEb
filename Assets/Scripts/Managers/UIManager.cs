@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class UIManager : MonoBehaviour
     public Slider mouseSlider;
     public Slider soundSlider;
     public Slider musicSlider;
+    public Slider fovSlider;
+
+    public TextMeshProUGUI fovText;
 
     private bool isOpen;
 
@@ -66,5 +70,11 @@ public class UIManager : MonoBehaviour
     public void ChangeSensitivity()
     {
         mouse.mouseSensitivity = mouseSlider.value;
+    }
+
+    public void ChangeFOV()
+    {
+        Camera.main.fieldOfView = fovSlider.value;
+        fovText.text = fovSlider.value.ToString();
     }
 }
