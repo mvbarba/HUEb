@@ -27,7 +27,6 @@ public class MouseLook : MonoBehaviour
 	}
 
 	public void Update() {
-
 		if (Input.GetKeyDown("g")) {
 			Debug.Log(LevelManager.Instance().CheckComplete());
 		}
