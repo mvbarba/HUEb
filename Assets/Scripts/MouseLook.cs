@@ -52,6 +52,14 @@ public class MouseLook : MonoBehaviour
 			playerBody.Rotate(Vector3.up * mx);
 		}
 
+		// Check if the item the player is holding is too close
+		if (playerState.itemHeld) {
+			float distanceToItemHeld = Vector3.Distance(playerState.itemHeld.transform.position, transform.position);
+			if (distanceToItemHeld < 1) {
+				playerState.itemHeld.Drop();
+			}
+		}
+
 		// Check if the player sees an interactable
 		RaycastHit raycastHit;
         if (dimension.currentDimension == Constants.Color.None)

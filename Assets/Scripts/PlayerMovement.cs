@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 	public float gravity = -12f;
 	public float jumpForce = 3f;
 	public LayerMask groundMask;
+	private PlayerStateManager playerState;
 	
 	private bool isGrounded = false;
 	private Vector3 velocity;
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 	private void Start() {
 		dimension = DimensionManager.Instance();
         audio = AudioManager.Instance();
-
+		playerState = PlayerStateManager.Instance();
     }
 
 	public void Update() {
@@ -60,16 +61,22 @@ public class PlayerMovement : MonoBehaviour
 
 		// Check for universe switching
 		if (!dimension.locked) {
-			if (Input.GetButtonDown("RedU")) {
-				if (dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield))
-                    audio.PlayRandomSwitch();
-			} else if (Input.GetButtonDown("GreenU")) {
-                if (dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield))
-                    audio.PlayRandomSwitch();
-            } else if (Input.GetButtonDown("BlueU")) {
-                if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
-                    audio.PlayRandomSwitch();
-            }
+			// Drop the cube if they switch out of that color's dimension
+			if (Input.GetButtonDown("RedU") || Input.GetButtonDown("BlueU") || Input.GetButtonDown("GreenU")) {
+				if (playerState.itemHeld && playerState.itemHeld.GetComponent<Interactable>().color != Constants.Color.White) {
+					playerState.itemHeld.Drop();
+				}
+				if (Input.GetButtonDown("RedU")) {
+					if (dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield))
+						audio.PlayRandomSwitch();
+				} else if (Input.GetButtonDown("GreenU")) {
+					if (dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield))
+						audio.PlayRandomSwitch();
+				} else if (Input.GetButtonDown("BlueU")) {
+					if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
+						audio.PlayRandomSwitch();
+				}
+			}
 		}
 
 		// Get the player WASD input
