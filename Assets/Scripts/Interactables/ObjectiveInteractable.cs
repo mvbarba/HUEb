@@ -4,8 +4,12 @@ public class ObjectiveInteractable : Interactable {
 	private bool isComplete = false;	
 
 	public override void OnInteract() {
-		isComplete = true;
-		LevelManager.Instance().CheckComplete();
+        if (!isComplete)
+        {
+            isComplete = true;
+            AudioManager.Instance().Play("Button");
+            LevelManager.Instance().CheckComplete();
+        }
 	}
 
 	public bool CheckComplete() {

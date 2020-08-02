@@ -11,7 +11,10 @@ public class LevelChangeInteractable : Interactable
     public override void OnInteract()
     {
         if (isOn)
+        {
             LevelManager.Instance().StartLevel(level);
+            AudioManager.Instance().Play("Button");
+        }
     }
 
     private TextMeshPro label;

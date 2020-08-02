@@ -9,6 +9,7 @@ TagManager:
   - Green
   - Blue
   - CameraCenter
+  - DestroyOnLoad
   layers:
   - Default
   - TransparentFX

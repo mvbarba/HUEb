@@ -29,9 +29,13 @@ public class PlayerMovement : MonoBehaviour
 	private Vector3 velocity;
 	private DimensionManager dimension;
 
+    private AudioManager audio;
+
 	private void Start() {
 		dimension = DimensionManager.Instance();
-	}
+        audio = AudioManager.Instance();
+
+    }
 
 	public void Update() {
 
@@ -50,14 +54,16 @@ public class PlayerMovement : MonoBehaviour
 
 		// Check for universe switching
 		if (!dimension.locked) {
-
 			if (Input.GetButtonDown("RedU")) {
-				dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield);
+				if (dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield))
+                    audio.PlayRandomSwitch();
 			} else if (Input.GetButtonDown("GreenU")) {
-				dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield);
-			} else if (Input.GetButtonDown("BlueU")) {
-				dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield);
-			}
+                if (dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield))
+                    audio.PlayRandomSwitch();
+            } else if (Input.GetButtonDown("BlueU")) {
+                if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
+                    audio.PlayRandomSwitch();
+            }
 		}
 
 		// Get the player WASD input

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] sounds;
 
-    // Start is called before the first frame update
+    private void Start()
+    {
+        Play("Song");
+    }
+
     void Awake()
     {
         if (instance == null)
@@ -37,5 +42,13 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
+    }
+
+    int num;
+
+    public void PlayRandomSwitch()
+    {
+        num++;
+        Play((num % 2 == 0) ? "Switch1" : "Switch2");
     }
 }
