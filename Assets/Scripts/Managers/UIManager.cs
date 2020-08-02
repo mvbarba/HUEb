@@ -87,4 +87,9 @@ public class UIManager : MonoBehaviour
         Camera.main.fieldOfView = fovSlider.value;
         fovText.text = fovSlider.value.ToString();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
