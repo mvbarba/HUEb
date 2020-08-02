@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     private List<Collider> forcefieldColliders;
     private PlayerMovement player;
     private LevelNum currentLevelNum = LevelNum.Level1;
+    private TutorialManager tutorial;
 
     public float levelTransitionDelay;
 
@@ -99,6 +100,7 @@ public class LevelManager : MonoBehaviour
         UpdateLevelButtonLights();
         particleParent.SetActive(false);
         dimension.locked = false;
+        tutorial.SetTutorial(currentLevelNum);
         yield break;
     }
 
@@ -175,6 +177,7 @@ public class LevelManager : MonoBehaviour
                 forcefieldColliders.Add(col);
         }
         player = PlayerMovement.Instance();
+        tutorial = TutorialManager.Instance();
 
     }
 
