@@ -48,44 +48,48 @@ public class PlayerMovement : MonoBehaviour
 		if (isGrounded && velocity.y < 0) {
 			velocity.y = 0f;
 		}
-
-        // Open UI
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            ui.ToggleUI();
-        }
 		
 		// If the player is on the ground, let them jump if they wish
 		if (Input.GetButtonDown("Jump") && isGrounded) {
 			velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
 		}
 
+		Vector3 deltaMove = new Vector3();
 		// Check for universe switching
-		if (!dimension.locked) {
-			// Drop the cube if they switch out of that color's dimension
-			if (Input.GetButtonDown("RedU") || Input.GetButtonDown("BlueU") || Input.GetButtonDown("GreenU")) {
-				if (playerState.itemHeld && playerState.itemHeld.GetComponent<Interactable>().color != Constants.Color.White) {
-					playerState.itemHeld.Drop();
-				}
-				if (Input.GetButtonDown("RedU")) {
-					if (dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield))
-						audio.PlayRandomSwitch();
-				} else if (Input.GetButtonDown("GreenU")) {
-					if (dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield))
-						audio.PlayRandomSwitch();
-				} else if (Input.GetButtonDown("BlueU")) {
-					if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
-						audio.PlayRandomSwitch();
+		if (!playerState.isPlayerFrozen) {
+
+			// Open UI
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				ui.ToggleUI();
+			}
+
+			if (!dimension.locked) {
+				// Drop the cube if they switch out of that color's dimension
+				if (Input.GetButtonDown("RedU") || Input.GetButtonDown("BlueU") || Input.GetButtonDown("GreenU")) {
+					if (playerState.itemHeld && playerState.itemHeld.GetComponent<Interactable>().color != Constants.Color.White) {
+						playerState.itemHeld.Drop();
+					}
+					if (Input.GetButtonDown("RedU")) {
+						if (dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield))
+							audio.PlayRandomSwitch();
+					} else if (Input.GetButtonDown("GreenU")) {
+						if (dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield))
+							audio.PlayRandomSwitch();
+					} else if (Input.GetButtonDown("BlueU")) {
+						if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
+							audio.PlayRandomSwitch();
+					}
 				}
 			}
+
+			// Get the player WASD input
+			float x = Input.GetAxis("Horizontal");
+			float z = Input.GetAxis("Vertical");
+
+			// Move the player according to their WASD input
+			deltaMove = transform.right * x + transform.forward * z;
 		}
-
-		// Get the player WASD input
-		float x = Input.GetAxis("Horizontal");
-		float z = Input.GetAxis("Vertical");
-
-		// Move the player according to their WASD input
-		Vector3 delta = transform.right * x + transform.forward * z;
-		controller.Move(delta * movementSpeed * Time.deltaTime);
+		controller.Move(deltaMove * movementSpeed * Time.deltaTime);
 
 		// Apply gravity, dY = 1/2(g) * t^2
 		velocity.y += gravity * Time.deltaTime;

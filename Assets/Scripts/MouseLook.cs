@@ -36,7 +36,14 @@ public class MouseLook : MonoBehaviour
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 			Cursor.visible = Cursor.lockState == CursorLockMode.None;
 		}
-		
+
+		// Apply camera shake
+		transform.localPosition = CameraShake() + orignalCamPosition;
+
+		if (playerState.isPlayerFrozen) {
+			return;
+		}
+
 		// Only move the character's view if the cursor is locked in
 		if (Cursor.lockState == CursorLockMode.Locked) {
 			float mx = Input.GetAxis("Mouse X");
@@ -87,9 +94,6 @@ public class MouseLook : MonoBehaviour
 
 		// Update the HUD
 		hud.GetComponent<Animator>().SetBool("SeesInteractable", playerState.itemSeen != null && playerState.itemHeld == null);
-
-        // Apply camera shake
-        transform.localPosition = CameraShake() + orignalCamPosition;
     }
 
     public Vector3 CameraShake()

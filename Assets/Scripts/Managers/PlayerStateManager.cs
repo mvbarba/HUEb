@@ -8,6 +8,10 @@ public class PlayerStateManager : MonoBehaviour
 
 	public PickupInteractable itemHeld = null;
 	public Interactable itemSeen = null;
+	public bool isPlayerFrozen {
+		get;
+		private set;
+	}
 
 	private void Awake() {
 		instance = !instance ? this : instance;
@@ -15,5 +19,19 @@ public class PlayerStateManager : MonoBehaviour
 
 	public static PlayerStateManager Instance() {
 		return instance;
+	}
+
+	public void FreezePlayer(bool frozen) {
+		isPlayerFrozen = frozen;
+	}
+
+	public void Start() {
+		StartCoroutine(FreezePlayerOnStart());
+	}
+
+	public IEnumerator FreezePlayerOnStart() {
+		FreezePlayer(true);
+		yield return new WaitForSeconds(2f);
+		FreezePlayer(false);
 	}
 }
