@@ -55,7 +55,7 @@ public class MouseLook : MonoBehaviour
 		// Check if the item the player is holding is too close
 		if (playerState.itemHeld) {
 			float distanceToItemHeld = Vector3.Distance(playerState.itemHeld.transform.position, transform.position);
-			if (distanceToItemHeld < 1) {
+			if (distanceToItemHeld < 1f || distanceToItemHeld > 4.5f) {
 				playerState.itemHeld.Drop();
 			}
 		}
