@@ -54,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
 			velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
 		}
 
+		if (Input.GetKeyDown("p")) {
+			PlayerPrefs.DeleteAll();
+		}
+
 		Vector3 deltaMove = new Vector3();
 		// Check for universe switching
 		if (!playerState.isPlayerFrozen) {

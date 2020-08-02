@@ -17,10 +17,20 @@ public class UIManager : MonoBehaviour
     public Slider fovSlider;
 
     public TextMeshProUGUI fovText;
-
+    public GameObject endScreen;
     private bool isOpen;
 
-    private void Start()
+    private static UIManager instance;
+
+	private void Awake() {
+        instance = !instance ? this : instance;
+	}
+
+    public static UIManager Instance() {
+        return instance;
+	}
+
+	private void Start()
     {
         mouse = Camera.main.GetComponent<MouseLook>();
     }

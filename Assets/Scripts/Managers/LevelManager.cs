@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        PlayerPrefs.SetInt(levelNum.ToString(), 1);
+        //PlayerPrefs.SetInt(levelNum.ToString(), 1);
         ToggleForcefield(false);
         float movementSpeed = player.movementSpeed;
         player.movementSpeed = 0f;
@@ -171,6 +171,11 @@ public class LevelManager : MonoBehaviour
         dimension.locked = true;
         AudioManager.Instance().Play("Ding");
         isLevelComplete = true;
+        
+        // Check if this is the final level
+        if (currentLevelNum == LevelNum.Level6) {
+            UIManager.Instance().endScreen.SetActive(true);
+		}
         return true;
 	}
 
@@ -185,6 +190,7 @@ public class LevelManager : MonoBehaviour
         }
         player = PlayerMovement.Instance();
         tutorial = TutorialManager.Instance();
+        PlayerPrefs.SetInt(LevelNum.Level1.ToString(), 1);
         UpdateLevelButtonLights();
 
     }
