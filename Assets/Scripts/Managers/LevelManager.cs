@@ -164,6 +164,7 @@ public class LevelManager : MonoBehaviour
         DimensionManager dimension = DimensionManager.Instance();
         dimension.ChangeDimension(Constants.Color.None, true);
         dimension.locked = true;
+        AudioManager.Instance().Play("Ding");
         return true;
 	}
 
