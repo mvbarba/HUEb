@@ -20,6 +20,7 @@ public class MouseLook : MonoBehaviour
 
 	public void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 		hud = GameObject.Find("HUD");
 		playerState = PlayerStateManager.Instance();
 		dimension = DimensionManager.Instance();
