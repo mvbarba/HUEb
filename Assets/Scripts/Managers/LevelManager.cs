@@ -12,6 +12,10 @@ public class LevelManager : MonoBehaviour
     private PlayerMovement player;
     private LevelNum currentLevelNum = LevelNum.Level1;
     private TutorialManager tutorial;
+    public bool isLevelComplete {
+        get;
+        private set;
+	}
 
     public float levelTransitionDelay;
 
@@ -101,6 +105,7 @@ public class LevelManager : MonoBehaviour
         particleParent.SetActive(false);
         dimension.locked = false;
         tutorial.SetTutorial(currentLevelNum);
+        isLevelComplete = false;
         yield break;
     }
 
@@ -165,6 +170,7 @@ public class LevelManager : MonoBehaviour
         dimension.ChangeDimension(Constants.Color.None, true);
         dimension.locked = true;
         AudioManager.Instance().Play("Ding");
+        isLevelComplete = true;
         return true;
 	}
 
@@ -179,6 +185,7 @@ public class LevelManager : MonoBehaviour
         }
         player = PlayerMovement.Instance();
         tutorial = TutorialManager.Instance();
+        UpdateLevelButtonLights();
 
     }
 

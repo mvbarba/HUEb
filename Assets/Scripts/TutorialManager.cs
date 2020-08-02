@@ -7,14 +7,13 @@ public class TutorialManager : MonoBehaviour
 {
 
     private static TutorialManager instance;
+    public static TutorialManager Instance() {
+        return instance;
+    }
 
     private void Awake() {
         instance = !instance ? this : instance;
     }
-
-    public static TutorialManager Instance() {
-        return instance;
-	}
 
     [Serializable]
     public struct MaterialRelation {
@@ -24,13 +23,17 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField]
     public MaterialRelation[] tutorialMaterials;
+    public Material defaultMaterial;
 
     public void SetTutorial(LevelManager.LevelNum levelNum) {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
         foreach (MaterialRelation mr in tutorialMaterials) {
             if (mr.levelNum == levelNum) {
-                gameObject.GetComponent<Renderer>().sharedMaterial = mr.material;
+                renderer.sharedMaterial = mr.material;
+                return;
 			}
 		}
+        renderer.sharedMaterial = defaultMaterial;
 	}
     
 }

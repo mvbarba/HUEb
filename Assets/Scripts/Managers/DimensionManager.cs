@@ -50,6 +50,10 @@ public class DimensionManager : MonoBehaviour
     // Returns whether the dimension changed or not
     public bool ChangeDimension(Constants.Color color, bool forcefield = false)
     {
+        if (LevelManager.Instance().isLevelComplete) {
+            return false;
+		}
+
         Constants.Color oldDimension = currentDimension;
 
         List<GameObject> objects = LevelManager.Instance().GetLevelObjects();
