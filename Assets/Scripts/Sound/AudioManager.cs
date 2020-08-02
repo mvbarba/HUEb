@@ -51,4 +51,22 @@ public class AudioManager : MonoBehaviour
         num++;
         Play((num % 2 == 0) ? "Switch1" : "Switch2");
     }
+
+    public void ChangeVolume(float multiplier)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (!s.music)
+                s.source.volume = s.volume * multiplier;
+        }
+    }
+
+    public void ChangeMusicVolume(float multiplier)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.music)
+                s.source.volume = s.volume * multiplier;
+        }
+    }
 }
