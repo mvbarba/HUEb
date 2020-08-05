@@ -26,7 +26,9 @@ public class LevelChangeInteractable : Interactable
         label = GetComponentInChildren<TextMeshPro>();
         int levelInt = (int)level;
         label.text = levelInt.ToString();
-        isOn = startOn;
+        isOn = PlayerPrefs.GetInt(level.ToString()) == 1;
+        if (!isOn)
+            isOn = startOn;
         SetOn(isOn);
     }
 

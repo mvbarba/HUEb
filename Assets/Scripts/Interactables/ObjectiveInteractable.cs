@@ -1,14 +1,23 @@
 ﻿using UnityEngine;
 
 public class ObjectiveInteractable : Interactable {
-	private bool isComplete = false;	
+	private bool isComplete = false;
+    protected DissolveScript dissolve;
 
-	public override void OnInteract() {
+    private void Start()
+    {
+        dissolve = GetComponent<DissolveScript>();
+    }
+
+    public override void OnInteract() {
         if (!isComplete)
         {
-            isComplete = true;
-            AudioManager.Instance().Play("Button");
-            LevelManager.Instance().CheckComplete();
+            if (!dissolve.isDissolving)
+            {
+                isComplete = true;
+                AudioManager.Instance().Play("Button");
+                LevelManager.Instance().CheckComplete();
+            }
         }
 	}
 

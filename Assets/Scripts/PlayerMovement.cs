@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
 			if (!dimension.locked) {
 				// Drop the cube if they switch out of that color's dimension
-				if (Input.GetButtonDown("RedU") || Input.GetButtonDown("BlueU") || Input.GetButtonDown("GreenU")) {
+				if (Input.GetButtonDown("RedU") || Input.GetButtonDown("BlueU") || Input.GetButtonDown("GreenU") || Input.GetKeyDown(KeyCode.Mouse0)) {
 					if (playerState.itemHeld && playerState.itemHeld.GetComponent<Interactable>().color != Constants.Color.White) {
 						playerState.itemHeld.Drop();
 					}
@@ -82,8 +82,36 @@ public class PlayerMovement : MonoBehaviour
 					} else if (Input.GetButtonDown("BlueU")) {
 						if (dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield))
 							audio.PlayRandomSwitch();
-					}
-				}
+					} else if (Input.GetKeyDown(KeyCode.Mouse0)){
+                        if (!Cursor.visible){
+                            switch (dimension.currentDimension)
+                            {
+                                case Constants.Color.None:
+                                case Constants.Color.White:
+                                case Constants.Color.Blue:
+                                    {
+                                        dimension.ChangeDimension(Constants.Color.Red, !dimension.inForcefield);
+                                        break;
+                                    }
+                                case Constants.Color.Red:
+                                    {
+                                        dimension.ChangeDimension(Constants.Color.Green, !dimension.inForcefield);
+                                        break;
+                                    }
+                                case Constants.Color.Green:
+                                    {
+                                        dimension.ChangeDimension(Constants.Color.Blue, !dimension.inForcefield);
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        break;
+                                    }
+                            }
+                            audio.PlayRandomSwitch();
+                        }
+                    }
+                }
 			}
 
 			// Get the player WASD input

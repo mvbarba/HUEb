@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject about;
     public GameObject settings;
+    public GameObject controls;
 
     public Slider mouseSlider;
     public Slider soundSlider;
@@ -54,6 +55,7 @@ public class UIManager : MonoBehaviour
     {
         about.SetActive(false);
         settings.SetActive(false);
+        controls.SetActive(false);
         isOpen = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -91,5 +93,11 @@ public class UIManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenControls()
+    {
+        settings.SetActive(false);
+        controls.SetActive(true);
     }
 }

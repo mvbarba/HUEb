@@ -5,7 +5,8 @@ using UnityEngine;
 public class DissolveScript : MonoBehaviour
 {
     private bool dissolve;
-    private bool isDissolving;
+    [HideInInspector]
+    public bool isDissolving;
     private Renderer rend;
     private float lerp;
 

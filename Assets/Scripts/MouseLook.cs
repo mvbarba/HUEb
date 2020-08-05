@@ -19,15 +19,21 @@ public class MouseLook : MonoBehaviour
     private string[] layers;
 
 	public void Start() {
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
-		hud = GameObject.Find("HUD");
+        //We are now showing the control screen first
+        /*Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;*/
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        hud = GameObject.Find("HUD");
 		playerState = PlayerStateManager.Instance();
 		dimension = DimensionManager.Instance();
         orignalCamPosition = this.transform.localPosition;
 	}
 
 	public void Update() {
+
+        // Removing these for now. 
+        /*
 		if (Input.GetKeyDown("g")) {
 			Debug.Log(LevelManager.Instance().CheckComplete());
 		}
@@ -37,6 +43,7 @@ public class MouseLook : MonoBehaviour
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 			Cursor.visible = Cursor.lockState == CursorLockMode.None;
 		}
+        */
 
 		// Apply camera shake
 		transform.localPosition = CameraShake() + orignalCamPosition;
