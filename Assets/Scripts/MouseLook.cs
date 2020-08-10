@@ -92,7 +92,7 @@ public class MouseLook : MonoBehaviour
 		}
 
 		// Check if they want to interact with the object
-		if (Input.GetButtonDown("Interact")) {
+		if (Input.GetKeyDown(KeyCode.E)) {
 			if (playerState.itemHeld != null) {
 				playerState.itemHeld.Drop();
 			} else if (playerState.itemSeen != null) {
